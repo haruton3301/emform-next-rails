@@ -5,6 +5,7 @@
 - Frontend
 
   - Next15
+  - Shadcn/ui
 
 - API
   - Rails
