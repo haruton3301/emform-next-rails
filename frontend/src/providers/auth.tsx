@@ -13,7 +13,7 @@ interface AuthContextType {
   user: User | null
   isSignedIn: boolean
   signIn: ({ email, password }: SignInParams) => Promise<void>
-  signOut: () => void
+  signOut: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)

@@ -1,9 +1,8 @@
 "use client"
 
 import messages from "@/lib/constants/messages"
-import { EmailAlreadyTakenError } from "@/lib/errors/auth"
-import { authService } from "@/lib/services"
-import { SignUpData, signUpSchema } from "@/lib/validations/auth"
+import { InvalidCredentialsError } from "@/lib/errors/auth"
+import { SignInData, signInSchema } from "@/lib/validations/auth"
 import { useAuth } from "@/providers/auth"
 import { useToast } from "@/providers/toast"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -22,33 +21,32 @@ import {
 } from "../ui/form"
 import { Input } from "../ui/input"
 
-export const SignUpForm: React.FC = () => {
+export const SignInForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const { signIn } = useAuth()
   const router = useRouter()
   const toast = useToast()
 
-  const form = useForm<SignUpData>({
-    resolver: zodResolver(signUpSchema),
+  const form = useForm<SignInData>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   })
 
-  const onSubmit: SubmitHandler<SignUpData> = async (data) => {
+  const onSubmit: SubmitHandler<SignInData> = async (data) => {
     setIsSubmitting(true)
     try {
-      await authService.signUp(data)
       await signIn(data)
 
-      toast.success(messages.signUpSuccessfulMessage)
+      toast.success(messages.signInSuccessfulMessage)
       router.push("/console/forms")
     } catch (error) {
       setIsSubmitting(false)
 
-      if (error instanceof EmailAlreadyTakenError) {
-        toast.error(messages.emailAlreadyTakenMessage)
+      if (error instanceof InvalidCredentialsError) {
+        toast.error(messages.invalidCredentialsMessage)
       } else {
         toast.error(messages.commonMessage)
         console.error(error)
@@ -59,7 +57,7 @@ export const SignUpForm: React.FC = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-2xl">ユーザー登録</CardTitle>
+        <CardTitle className="text-2xl">ログイン</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -96,7 +94,7 @@ export const SignUpForm: React.FC = () => {
                 )}
               />
               <Button type="submit" disabled={isSubmitting} className="w-full">
-                登録
+                ログイン
               </Button>
             </div>
           </form>
