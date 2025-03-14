@@ -30,6 +30,10 @@ export const SignUpForm: React.FC = () => {
 
   const form = useForm<SignUpData>({
     resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   })
 
   const onSubmit: SubmitHandler<SignUpData> = async (data) => {
@@ -87,7 +91,7 @@ export const SignUpForm: React.FC = () => {
                     <div className="grid gap-2">
                       <FormLabel>パスワード</FormLabel>
                       <FormControl>
-                        <Input {...field} />
+                        <Input type="password" {...field} />
                       </FormControl>
                       <FormMessage />
                     </div>
