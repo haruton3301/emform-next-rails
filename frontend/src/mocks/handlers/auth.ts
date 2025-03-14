@@ -1,5 +1,10 @@
 import { http, HttpResponse, RequestHandler } from "msw"
-import { mockAuthHeaders, mockPassword, mockUser } from "../data/auth"
+import {
+  mockAuthHeaders,
+  mockExistingUser,
+  mockPassword,
+  mockUser,
+} from "../data/auth"
 
 export const createAuthHandlers = (mockEndPoint: string): RequestHandler[] => {
   return [
@@ -7,7 +12,7 @@ export const createAuthHandlers = (mockEndPoint: string): RequestHandler[] => {
       const body = await request.json()
       const { email } = body as { email: string }
 
-      if (email === mockUser.email) {
+      if (email === mockExistingUser.email) {
         return HttpResponse.json(
           { errors: { email: ["has already been taken"] } },
           { status: 422 },

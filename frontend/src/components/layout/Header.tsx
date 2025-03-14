@@ -36,7 +36,7 @@ export const Header: React.FC = () => {
               </Link>
             </nav>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-2">
             {isSignedIn ? (
               <Button onClick={handleSignOut}>ログアウト</Button>
             ) : (

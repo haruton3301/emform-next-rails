@@ -9,7 +9,6 @@ export const mockExistingUser = {
 }
 
 export const mockPassword = "password123"
-export const mockToken = "fake-jwt-token"
 
 export const mockAuthHeaders = {
   "access-token": "mockAccessToken",

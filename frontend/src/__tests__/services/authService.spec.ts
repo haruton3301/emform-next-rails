@@ -5,6 +5,7 @@ import {
 import AuthService from "@/lib/services/authService"
 import {
   mockAuthHeaders,
+  mockExistingUser,
   mockInvalidAuthHeader,
   mockPassword,
   mockUser,
@@ -29,7 +30,7 @@ describe("AuthService", () => {
     it("should handle email already taken error", async () => {
       await expect(
         authService.signUp({
-          email: mockUser.email,
+          email: mockExistingUser.email,
           password: mockPassword,
         }),
       ).rejects.toThrow(EmailAlreadyTakenError)
