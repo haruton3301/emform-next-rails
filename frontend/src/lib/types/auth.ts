@@ -13,8 +13,8 @@ export interface User {
   email: string
 }
 
-export interface AuthHeaders {
-  accessToken: string
+export interface AuthHeaders extends Record<string, string> {
+  "access-token": string
   client: string
   expiry: string
   uid: string

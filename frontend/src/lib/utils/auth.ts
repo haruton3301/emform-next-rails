@@ -26,17 +26,9 @@ export function extractAuthHeaders(response: Response): AuthHeaders {
   }
 
   return {
-    accessToken,
+    "access-token": accessToken,
     client,
     expiry,
     uid,
-  }
-}
-
-export function createAuthHeaders(authHeaders: AuthHeaders) {
-  return {
-    "access-token": authHeaders.accessToken,
-    client: authHeaders.client,
-    uid: authHeaders.uid,
   }
 }

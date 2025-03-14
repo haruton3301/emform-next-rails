@@ -14,3 +14,10 @@ export class InvalidCredentialsError extends BaseError {
     this.name = "InvalidCredentialsError"
   }
 }
+
+export class InvalidAuthHeadersError extends BaseError {
+  constructor() {
+    super(messages.invalidAuthHeadersMessage)
+    this.name = "InvalidAuthHeadersError"
+  }
+}

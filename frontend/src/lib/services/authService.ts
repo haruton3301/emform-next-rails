@@ -1,11 +1,11 @@
-import { EmailAlreadyTakenError, InvalidCredentialsError } from "../errors/auth"
+import {
+  EmailAlreadyTakenError,
+  InvalidAuthHeadersError,
+  InvalidCredentialsError,
+} from "../errors/auth"
 import { CommonError } from "../errors/base"
 import { AuthHeaders, SignInParams, SignUpParams, User } from "../types/auth"
-import {
-  createAuthHeaders,
-  extractAuthHeaders,
-  extractUser,
-} from "../utils/auth"
+import { extractAuthHeaders, extractUser } from "../utils/auth"
 import ApiClient from "./apiClient"
 
 class AuthService {
@@ -13,6 +13,15 @@ class AuthService {
 
   constructor() {
     this.apiClient = new ApiClient()
+  }
+
+  private validateAuthHeaders(authHeaders: AuthHeaders): void {
+    const requiredKeys = ["access-token", "client", "expiry", "uid"]
+    for (const key of requiredKeys) {
+      if (!authHeaders[key]) {
+        throw new InvalidAuthHeadersError()
+      }
+    }
   }
 
   public async signUp(params: SignUpParams): Promise<void> {
@@ -55,13 +64,34 @@ class AuthService {
   }
 
   public async signOut(authHeaders: AuthHeaders): Promise<void> {
+    this.validateAuthHeaders(authHeaders)
     try {
-      const headers = createAuthHeaders(authHeaders)
-      const response = await this.apiClient.delete("/v1/auth/sign_out", headers)
+      const response = await this.apiClient.delete(
+        "/v1/auth/sign_out",
+        authHeaders,
+      )
 
       if (!response.ok) {
         throw new CommonError()
       }
+    } catch {
+      throw new CommonError()
+    }
+  }
+
+  public async currentUser(authHeaders: AuthHeaders): Promise<User> {
+    this.validateAuthHeaders(authHeaders)
+    try {
+      const response = await this.apiClient.get(
+        "/v1/auth/validate_token",
+        authHeaders,
+      )
+
+      if (!response.ok) {
+        throw new CommonError()
+      }
+
+      return await extractUser(response)
     } catch {
       throw new CommonError()
     }

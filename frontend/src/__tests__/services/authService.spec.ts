@@ -4,8 +4,8 @@ import {
 } from "@/lib/errors/auth"
 import AuthService from "@/lib/services/authService"
 import {
-  mockExtractedAuthHeaders,
-  mockInvalidExtractedAuthHeader,
+  mockAuthHeaders,
+  mockInvalidAuthHeader,
   mockPassword,
   mockUser,
 } from "@/mocks/data/auth"
@@ -43,7 +43,7 @@ describe("AuthService", () => {
         password: mockPassword,
       })
       expect(user).toEqual(mockUser)
-      expect(authHeaders).toEqual(mockExtractedAuthHeaders)
+      expect(authHeaders).toEqual(mockAuthHeaders)
     })
 
     it("should handle invalid credentials error", async () => {
@@ -58,12 +58,22 @@ describe("AuthService", () => {
 
   describe("signOut", () => {
     it("should handle successful sign out", async () => {
-      await authService.signOut(mockExtractedAuthHeaders)
+      await authService.signOut(mockAuthHeaders)
     })
 
     it("should handle unauthorized sign out", async () => {
+      await expect(authService.signOut(mockInvalidAuthHeader)).rejects.toThrow()
+    })
+  })
+
+  describe("currentUser", () => {
+    it("should successfully retrieve the current user", async () => {
+      await authService.currentUser(mockAuthHeaders)
+    })
+
+    it("should return unauthorized when token is invalid", async () => {
       await expect(
-        authService.signOut(mockInvalidExtractedAuthHeader),
+        authService.currentUser(mockInvalidAuthHeader),
       ).rejects.toThrow()
     })
   })

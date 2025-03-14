@@ -1,8 +1,9 @@
 const messages = {
-  registerSuccessfulMessage: "登録が完了しました",
+  signUpSuccessfulMessage: "登録が完了しました",
   commonMessage: "エラーが発生しました",
   emailAlreadyTakenMessage: "既に登録されているメールアドレスです",
   invalidCredentialsMessage: "メールアドレスまたはパスワードが違います",
+  invalidAuthHeadersMessage: "不正な認証情報です",
   requiredMessage: "必須です",
   emailInvalidFormtMessage: "有効なメールアドレスを入力してください",
   passwordMinimumSizeMessage: "パスワードは6文字以上である必要があります",

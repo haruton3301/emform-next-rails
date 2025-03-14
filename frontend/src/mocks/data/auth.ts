@@ -18,14 +18,7 @@ export const mockAuthHeaders = {
   uid: mockUser.email,
 }
 
-export const mockExtractedAuthHeaders = {
-  accessToken: mockAuthHeaders["access-token"],
-  client: mockAuthHeaders.client,
-  expiry: mockAuthHeaders.expiry,
-  uid: mockAuthHeaders.uid,
-}
-
-export const mockInvalidExtractedAuthHeader = {
-  ...mockExtractedAuthHeaders,
-  accessToken: "invalid-access-token",
+export const mockInvalidAuthHeader = {
+  ...mockAuthHeaders,
+  "access-token": "invalid-access-token",
 }

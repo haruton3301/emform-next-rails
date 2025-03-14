@@ -1,10 +1,5 @@
 import { http, HttpResponse, RequestHandler } from "msw"
-import {
-  mockAuthHeaders,
-  mockExtractedAuthHeaders,
-  mockPassword,
-  mockUser,
-} from "../data/auth"
+import { mockAuthHeaders, mockPassword, mockUser } from "../data/auth"
 
 export const createAuthHandlers = (mockEndPoint: string): RequestHandler[] => {
   return [
@@ -45,8 +40,18 @@ export const createAuthHandlers = (mockEndPoint: string): RequestHandler[] => {
     http.delete(`${mockEndPoint}/v1/auth/sign_out`, ({ request }) => {
       const accessToken = request.headers.get("access-token")
 
-      if (accessToken === mockExtractedAuthHeaders.accessToken) {
+      if (accessToken === mockAuthHeaders["access-token"]) {
         return HttpResponse.text(null, { status: 200 })
+      }
+
+      return HttpResponse.json({ message: "Unauthorized" }, { status: 401 })
+    }),
+
+    http.get(`${mockEndPoint}/v1/auth/validate_token`, async ({ request }) => {
+      const accessToken = request.headers.get("access-token")
+
+      if (accessToken === mockAuthHeaders["access-token"]) {
+        return HttpResponse.json({ data: { ...mockUser } }, { status: 200 })
       }
 
       return HttpResponse.json({ message: "Unauthorized" }, { status: 401 })
