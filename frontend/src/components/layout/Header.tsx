@@ -28,12 +28,14 @@ export const Header: React.FC = () => {
               <span className="font-bold inline-block">{site.title}</span>
             </Link>
             <nav className="flex items-center gap-4 text-sm xl:gap-6">
-              <Link
-                href="/forms"
-                className="transition-colors hover:text-foreground/80 text-foreground"
-              >
-                フォーム一覧
-              </Link>
+              {isSignedIn && (
+                <Link
+                  href="/console/forms"
+                  className="transition-colors hover:text-foreground/80 text-foreground"
+                >
+                  フォーム一覧
+                </Link>
+              )}
             </nav>
           </div>
           <div className="flex gap-2">
