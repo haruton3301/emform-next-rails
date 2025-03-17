@@ -28,6 +28,29 @@ RSpec.describe "V1::Forms", type: :request do
     end
   end
 
+  describe 'GET /forms' do
+    it 'returns a list of forms for the current user' do
+      create_list(:form, 3, user: user) # 3つのフォームを作成
+
+      get v1_forms_path, headers: auth_headers
+
+      expect(response).to have_http_status(:ok)
+      expect(json.length).to eq(3)  # 返却されるフォームの数が3であること
+    end
+  end
+
+  describe 'GET /forms/:id' do
+    it 'returns a specific form for the current user' do
+
+      get v1_form_path(form.id), headers: auth_headers
+
+      expect(response).to have_http_status(:ok)
+      expect(json['id']).to eq(form.id)
+      expect(json['title']).to eq(form.title)
+      expect(json['description']).to eq(form.description)
+    end
+  end
+
   describe 'PATCH/PUT /forms/:id' do
     context 'with valid attributes' do
       it 'updates the form and returns a success response' do

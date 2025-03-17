@@ -17,5 +17,9 @@ export default function AuthLayout({
     }
   }, [isSignedIn, router])
 
-  return children
+  return (
+    <div className="flex min-h-svh w-full items-center justify-center px-6 md:px-10">
+      <div className="w-full max-w-sm">{children}</div>
+    </div>
+  )
 }

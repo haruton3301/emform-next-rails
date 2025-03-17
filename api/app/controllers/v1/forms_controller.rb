@@ -1,6 +1,6 @@
 class V1::FormsController < ApplicationController
   before_action :authenticate_v1_user!
-  before_action :set_form, only: [ :update, :update_publish_status, :destroy ]
+  before_action :set_form, only: [ :show, :update, :update_publish_status, :destroy ]
 
   # POST /forms
   def create
@@ -11,6 +11,17 @@ class V1::FormsController < ApplicationController
     else
       render json: @form.errors, status: :unprocessable_entity
     end
+  end
+
+   # GET /forms
+   def index
+    @forms = current_v1_user.forms.all
+    render json: @forms, status: :ok
+  end
+
+  # GET /forms/:id
+  def show
+    render json: @form, status: :ok
   end
 
   # PATCH/PUT /forms/:id
