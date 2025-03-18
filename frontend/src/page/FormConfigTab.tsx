@@ -2,21 +2,30 @@ import { FormDeleteModal } from "@/components/forms/FormDeleteModal"
 import { FormPublishSwitcher } from "@/components/forms/FormPublishSwitcher"
 import { FormUpdateModal } from "@/components/forms/FormUpdateModal"
 import { Card } from "@/components/ui/card"
+import messages from "@/lib/constants/messages"
 import { formService } from "@/lib/services"
 import { Form } from "@/lib/types/form"
+import { useToast } from "@/providers/toast"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function FormConfigTab({ id }: { id: string }) {
   const [form, setForm] = useState<Form>()
+  const router = useRouter()
+  const toast = useToast()
 
   useEffect(() => {
     const fetchForm = async () => {
-      const _form = await formService.getForm(id)
-      setForm(_form)
-      console.log(_form)
+      try {
+        const _form = await formService.getForm(id)
+        setForm(_form)
+      } catch {
+        router.push("/console/forms")
+        toast.error(messages.commonMessage)
+      }
     }
     fetchForm()
-  }, [id])
+  }, [id, router, toast])
 
   if (!form) {
     return <p>Loading...</p>
