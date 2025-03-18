@@ -20,14 +20,14 @@ export const Header: React.FC = () => {
   }
 
   return (
-    <header className="border-grid fixed top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container-wrapper flex justify-center">
-        <div className="container px-4 md:px-6 flex h-14 items-center gap-2 md:gap-4">
+    <header className="border-grid fixed top-0 z-60 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="flex justify-center">
+        <div className="w-full max-w-7xl mx-auto px-6 flex h-14 items-center gap-4">
           <div className="flex-1 flex">
-            <Link href="/" className="mr-4 flex items-center gap-2 lg:mr-6">
+            <Link href="/" className="mr-4 flex items-center gap-2">
               <span className="font-bold inline-block">{site.title}</span>
             </Link>
-            <nav className="flex items-center gap-4 text-sm xl:gap-6">
+            <nav className="flex items-center gap- text-sm">
               {isSignedIn && (
                 <Link
                   href="/console/forms"

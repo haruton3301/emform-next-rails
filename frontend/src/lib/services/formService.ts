@@ -26,7 +26,7 @@ class FormService {
     return await response.json()
   }
 
-  public async updateForm(id: number, params: FormParams): Promise<Form> {
+  public async updateForm(id: string, params: FormParams): Promise<Form> {
     const authHeaders = getAuthHeadersFromLocalStorage()
     if (!authHeaders) {
       throw new InvalidAuthHeadersError()
@@ -44,7 +44,7 @@ class FormService {
     return await response.json()
   }
 
-  public async deleteForm(id: number): Promise<void> {
+  public async deleteForm(id: string): Promise<void> {
     const authHeaders = getAuthHeadersFromLocalStorage()
     if (!authHeaders) {
       throw new InvalidAuthHeadersError()
@@ -57,7 +57,7 @@ class FormService {
   }
 
   public async updatePublishStatus(
-    id: number,
+    id: string,
     isPublish: boolean,
   ): Promise<Form> {
     const authHeaders = getAuthHeadersFromLocalStorage()
@@ -66,7 +66,7 @@ class FormService {
     }
 
     const response = await this.apiClient.patch(
-      `/v1/forms/${id}/publish`,
+      `/v1/forms/${id}/update_publish_status`,
       {
         is_publish: isPublish,
       },
@@ -93,7 +93,7 @@ class FormService {
     return await response.json()
   }
 
-  public async getForm(id: number): Promise<Form> {
+  public async getForm(id: string): Promise<Form> {
     const authHeaders = getAuthHeadersFromLocalStorage()
     if (!authHeaders) {
       throw new InvalidAuthHeadersError()

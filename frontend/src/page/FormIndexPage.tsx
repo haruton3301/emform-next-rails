@@ -13,17 +13,16 @@ export default function FormIndexPage() {
     const fetchForms = async () => {
       const _forms = await formService.getForms()
       setForms(_forms)
-      console.log(_forms)
     }
     fetchForms()
   }, [])
 
   return (
-    <>
+    <div className="min-h-svh w-full max-w-5xl mx-auto pt-14 px-6 md:px-10">
       <div className="my-3 flex justify-end">
         <FormCreateModal />
       </div>
       <FormList forms={forms} />
-    </>
+    </div>
   )
 }

@@ -21,7 +21,9 @@ export const FormList: React.FC<Props> = ({ forms }) => {
                   <p className="text-sm text-red-600">⚫︎非公開</p>
                 )}
               </div>
-              <CardDescription>Card Description</CardDescription>
+              <CardDescription className="line-clamp-1">
+                {form.description}
+              </CardDescription>
             </CardHeader>
           </Card>
         </Link>

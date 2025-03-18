@@ -2,10 +2,10 @@
 
 import messages from "@/lib/constants/messages"
 import { formService } from "@/lib/services"
+import { Form as TypeForm } from "@/lib/types/form"
 import { FormData, formSchema } from "@/lib/validations/form"
 import { useToast } from "@/providers/toast"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { Button } from "../ui/button"
@@ -27,26 +27,32 @@ import {
 } from "../ui/form"
 import { Input } from "../ui/input"
 
-export const FormCreateModal = () => {
+type Props = {
+  _form: TypeForm
+  setForm: (_form: TypeForm) => void
+}
+export const FormUpdateModal: React.FC<Props> = ({ _form, setForm }) => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
-  const router = useRouter()
+  const [open, setOpen] = useState(false)
   const toast = useToast()
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
+      title: _form.title,
+      description: _form.description,
     },
   })
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     setIsSubmitting(true)
     try {
-      const form = await formService.createForm(data)
+      const form = await formService.updateForm(_form.id, data)
+      setForm(form)
 
-      toast.success(messages.formCreatedMessage)
-      router.push(`/console/forms/?id=${form.id}`)
+      toast.success(messages.formUpdatedMessage)
+      setOpen(false)
+      setIsSubmitting(false)
     } catch (error) {
       setIsSubmitting(false)
       toast.error(messages.commonMessage)
@@ -55,15 +61,15 @@ export const FormCreateModal = () => {
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">新規作成</Button>
+        <Button variant="outline">編集</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>
-              <DialogTitle>フォームの新規作成</DialogTitle>
+              <DialogTitle>フォームの編集</DialogTitle>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <FormField
@@ -103,7 +109,7 @@ export const FormCreateModal = () => {
             </div>
             <DialogFooter>
               <Button type="submit" disabled={isSubmitting}>
-                作成
+                更新
               </Button>
             </DialogFooter>
           </form>

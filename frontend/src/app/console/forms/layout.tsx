@@ -17,9 +17,5 @@ export default function FormsLayout({
     }
   }, [isSignedIn, router])
 
-  return (
-    <div className="min-h-svh w-full max-w-5xl mx-auto pt-14 px-6 md:px-10">
-      {children}
-    </div>
-  )
+  return children
 }

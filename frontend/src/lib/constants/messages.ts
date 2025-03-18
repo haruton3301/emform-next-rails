@@ -12,8 +12,9 @@ const messages = {
   signOutSuccessfulMessage: "ログアウトしました",
   reportNotFoundMessage: "日報が存在しません",
   formCreatedMessage: "フォームを作成しました",
-  reportUpdatedMessage: "日報を更新しました",
-  reportDeletedMessage: "日報を削除しました",
+  formUpdatedMessage: "フォームを更新しました",
+  formPublishUpdatedMessage: "フォームの公開状態を更新しました",
+  formDeletedMessage: "フォームを削除しました",
   reportNotExistMessage: "日報がありません",
 }
 
