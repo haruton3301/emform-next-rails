@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_16_220325) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_19_224226) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "fields", force: :cascade do |t|
+    t.uuid "form_id", null: false
+    t.string "name", null: false
+    t.string "label", null: false
+    t.integer "order", default: 0, null: false
+    t.integer "field_type", null: false
+    t.boolean "is_required", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["form_id"], name: "index_fields_on_form_id"
+  end
 
   create_table "forms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
@@ -49,5 +61,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_16_220325) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "fields", "forms"
   add_foreign_key "forms", "users"
 end

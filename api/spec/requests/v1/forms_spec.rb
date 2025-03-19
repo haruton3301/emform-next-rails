@@ -41,7 +41,6 @@ RSpec.describe "V1::Forms", type: :request do
 
   describe 'GET /forms/:id' do
     it 'returns a specific form for the current user' do
-
       get v1_form_path(form.id), headers: auth_headers
 
       expect(response).to have_http_status(:ok)
