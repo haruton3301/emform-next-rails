@@ -5,6 +5,8 @@ const messages = {
   invalidCredentialsMessage: "メールアドレスまたはパスワードが違います",
   invalidAuthHeadersMessage: "不正な認証情報です",
   requiredMessage: "必須です",
+  invalidMessage: "無効な値です",
+  onlyEnglishMessage: "半角英数のみで入力してください",
   maxLengthMessage: (length: number) => `${length}文字以下で入力してください`,
   emailInvalidFormtMessage: "有効なメールアドレスを入力してください",
   passwordMinimumSizeMessage: "パスワードは6文字以上である必要があります",
@@ -15,6 +17,10 @@ const messages = {
   formUpdatedMessage: "フォームを更新しました",
   formPublishUpdatedMessage: "フォームの公開状態を更新しました",
   formDeletedMessage: "フォームを削除しました",
+  fieldCreatedMessage: "フィールドを作成しました",
+  fieldUpdatedMessage: "フィールドを更新しました",
+  fieldDeletedMessage: "フィールドを削除しました",
+  fieldReorderedMessage: "フィールドを並び替えました",
   reportNotExistMessage: "日報がありません",
 }
 

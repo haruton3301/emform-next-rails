@@ -32,7 +32,7 @@ export default function FormConfigTab({ id }: { id: string }) {
   }
 
   return (
-    <div className="py-6 space-y-6">
+    <div className="py-3 space-y-6">
       <div>
         <div className="flex items-center gap-4 mb-2">
           <h2 className="flex-1 text-xl font-semibold px-2">基本設定</h2>
@@ -58,7 +58,7 @@ export default function FormConfigTab({ id }: { id: string }) {
             <li className="flex items-center gap-4">
               <FormPublishSwitcher form={form} setForm={setForm} />
               <p className="text-slate-500">
-                {form.is_publish ? "公開" : "非公開"}
+                {form.is_publish ? "公開中" : "非公開"}
               </p>
             </li>
           </ul>
